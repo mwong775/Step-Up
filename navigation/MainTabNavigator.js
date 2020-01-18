@@ -89,23 +89,21 @@ const RedeemStack = createStackNavigator(
    {
       Redeem: RedeemScreen,
    },
+   topbar,
    config
 );
 
 RedeemStack.navigationOptions = {
    tabBarLabel: 'Redeem',
-   tabBarIcon: ({focused} => (
-     <Tab
-   )
 };
 
 RedeemStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   DashStack,
-  RedeemStack,
   ChallengesStack,
   SettingsStack,
+  RedeemStack,
 });
 
 tabNavigator.path = '';
