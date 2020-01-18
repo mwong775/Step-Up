@@ -4,58 +4,74 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import Dashboard from '../screens/Dashboard';
+import ChallengesScreen from '../screens/Challenges';
 import SettingsScreen from '../screens/SettingsScreen';
+
+const points = 'Points: 1234 :)';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
   default: {},
 });
 
-const HomeStack = createStackNavigator(
+const topbar = { /* The header config from Dashboard is now here */
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#99d6ff',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontSize: '20',
+    },
+  }
+};
+
+const DashStack = createStackNavigator(
   {
-    Home: HomeScreen,
+    Dashboard: Dashboard,
   },
+  topbar,
   config
 );
 
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+DashStack.navigationOptions = {
+  tabBarLabel: 'Dashboard',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={
         Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+          ? 'ios-stats' : 'ios-stats'
       }
     />
   ),
 };
 
-HomeStack.path = '';
+DashStack.path = '';
 
-const LinksStack = createStackNavigator(
+const ChallengesStack = createStackNavigator(
   {
-    Links: LinksScreen,
+    Challenges: ChallengesScreen,
   },
+  topbar,
   config
 );
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+ChallengesStack.navigationOptions = {
+  tabBarLabel: 'Challenges',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-fitness' : 'md-fitness'} />
   ),
 };
 
-LinksStack.path = '';
+ChallengesStack.path = '';
 
 const SettingsStack = createStackNavigator(
   {
     Settings: SettingsScreen,
   },
+  topbar,
   config
 );
 
@@ -69,8 +85,8 @@ SettingsStack.navigationOptions = {
 SettingsStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
+  DashStack,
+  ChallengesStack,
   SettingsStack,
 });
 
