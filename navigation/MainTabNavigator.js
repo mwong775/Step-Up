@@ -7,6 +7,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import RedeemScreen from '../screens/RedeemScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -68,10 +69,27 @@ SettingsStack.navigationOptions = {
 
 SettingsStack.path = '';
 
+const RedeemStack = createStackNavigator(
+   {
+      Redeem: RedeemScreen,
+   },
+   config
+);
+
+RedeemStack.navigationOptions = {
+   tabBarLabel: 'Redeem',
+   tabBarIcon: ({focused} => (
+     <Tab
+   )
+};
+
+RedeemStack.path = '';
+
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
+  RedeemStack,
 });
 
 tabNavigator.path = '';
