@@ -23,7 +23,7 @@ const topbar = { /* The header config from Dashboard is now here */
     },
     headerTintColor: '#fff',
     headerTitleStyle: {
-      fontSize: '20',
+      fontSize: 20,
     },
   }
 };
