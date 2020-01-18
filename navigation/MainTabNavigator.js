@@ -103,9 +103,9 @@ RedeemStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   DashStack,
+  RedeemStack,
   ChallengesStack,
   SettingsStack,
-  RedeemStack,
 });
 
 tabNavigator.path = '';
