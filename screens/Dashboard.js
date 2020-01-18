@@ -1,12 +1,16 @@
 import React from 'react';
 import { Pedometer } from "expo-sensors";
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 
 export default class App extends React.Component {
   state = {
     isPedometerAvailable: "checking",
     pastStepCount: 0,
-    currentStepCount: 0
+    currentStepCount: 0,
+    // below for tracking more stats eventually 
+    totalPointsEarned: 0,
+    totalSteps: 0,
+    DailyStepsPB: 0,
   };
 
   componentDidMount() {
@@ -61,13 +65,23 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>
-          Pedometer.isAvailableAsync(): {this.state.isPedometerAvailable}
-        </Text>
-        <Text>
-          Steps taken in the last 24 hours: {this.state.pastStepCount}
-        </Text>
-        <Text>Walk! And watch this go up: {this.state.currentStepCount}</Text>
+        <ScrollView style={styles.container} style={styles.contentContainer}>
+          <Text style={styles.currentStepText}>Current Steps: {this.state.currentStepCount}</Text>
+          <Text style={styles.pastStepText}>
+            Steps taken in the last 24 hours: {this.state.pastStepCount}
+          </Text>
+          <Text style={styles.asyncText}>
+            Pedometer.isAvailableAsync(): {this.state.isPedometerAvailable}
+          </Text>
+        </ScrollView>
+        <Image
+            source={
+                require('../assets/images/footprint.jpg')
+            }
+            style={styles.footprintImage}
+          />
+
+
       </View>
     );
   }
@@ -77,7 +91,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
+  contentContainer: {
+    paddingTop: 30,
+  },
+  currentStepText: {
+    fontSize: 30, 
+    textAlign: 'center',
+  },
+  pastStepText: {
+    textAlign: 'center',
+    display: 'none',
+  },
+  asyncText: {
+    textAlign: 'center',
+    display: 'none',
+  },
+  footprintImage: {
+    position: 'absolute',
+    alignSelf: 'center',
+    width: '100%',
+    height: '100%',
+    zIndex: -1,
+    opacity: 0.4,
+  }
 });
