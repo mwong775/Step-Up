@@ -16,14 +16,14 @@ _message = (Msg) => {
 
 render() {
    return (
-   	<View>
+   	<View style={{opacity: 0.8}}>
    	<TouchableOpacity
    	   style = {{backgroundColor: '#DDDDDD'}}
    	   onPress={() => this._message(this.props.Msg)}>
        <ImageBackground 
        source = {{uri: this.props.Pic}}
        style = {{height:100, padding: 10}} >
-       <Text style = {{fontSize: 20, fontWeight: "bold", color: "white", borderColor: "black",textAlign: "center", marginTop: 30}}>
+       <Text style = {{fontSize: 24, fontWeight: "bold", color: "white", borderColor: "black",textAlign: "center", marginTop: 30}}>
 	   {this.props.Info}
 	   </Text>
        </ImageBackground>
