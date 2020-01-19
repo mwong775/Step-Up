@@ -1,6 +1,24 @@
 import React from 'react';
 import { Pedometer } from "expo-sensors";
 import { StyleSheet, Text, View, ScrollView, Image, Button } from 'react-native';
+import { Stitch, AnonymousCredential } from "mongodb-stitch-react-native-sdk";
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://csaifiza:step@cluster0-mhxo2.azure.mongodb.net/test?retryWrites=true&w=majority";
+
+_loadClient() {
+    Stitch.initializeDefaultAppClient("YOUR APP ID").then(client => {
+      this.setState({ client });
+      this.state.client.auth
+        .loginWithCredential(new AnonymousCredential())
+        .then(user => {
+          console.log(`Successfully logged in as user ${user.id}`);
+          this.setState({ currentUserId: user.id });
+          this.setState({ currentUserId: client.auth.user.id });
+        })
+        .catch(err => {
+          console.log(`Failed to log in anonymously: ${err}`);
+          this.setState({ currentUserId: undefined });
 
 export default class App extends React.Component {
   state = {
@@ -15,10 +33,34 @@ export default class App extends React.Component {
   };
 
   componentDidMount() {
+    MongoClient.connect(url, function(err, db) {
+      if (err) throw err;
+      var dbo = db.db("Step-Up");
+      var query = { name: "Username" };
+      dbo.collection("User-Profile").find(query).toArray(function(err, result) {
+        if (err) throw err;
+        this.setState ({
+          currentStepCount: result.steps,
+          currentPoints: result.points
+      });
+        db.close();
+      });
+    });
     this._subscribe();
   }
 
   componentWillUnmount() {
+    MongoClient.connect(url, function(err, db) {
+      if (err) throw err;
+      var dbo = db.db("Step-Up");
+      var myquery = { name: "Username" };
+      var newvalues = { $set: {steps: this.state.currentStepCount, points: this.state.currentPoints } };
+      dbo.collection("User-Profile").updateOne(myquery, newvalues, function(err, res) {
+        if (err) throw err;
+        console.log("1 document updated");
+        db.close();
+      });
+    });
     this._unsubscribe();
   }
 
