@@ -55,21 +55,21 @@ export default class App extends React.Component {
   }
 
   setPoints = () => {
-    if((this.state.currentStepCount !== 0) && this.state.currentStepCount % 5 === 0 && (!this.state.isPointSet)) {
+    if((this.state.currentStepCount !== 0) && this.state.currentStepCount % 4 === 0 && (!this.state.isPointSet)) {
       this.setState(previousState => (
         { currentPoints: previousState.currentPoints + 1 }
       ));
       // this.storeData("userId");
       this.state.isPointSet = true;
     }
-    else if(this.state.currentStepCount % 5 === 1) {
+    else if(this.state.currentStepCount % 4 === 1) {
       this.state.isPointSet = false;
     }
   } 
 
   componentWillUnmount() {
     this._unsubscribe();
-    this.storeData("userId");
+    // this.storeData("userId");
   }
 
   storeData(userId) {
@@ -97,20 +97,6 @@ export default class App extends React.Component {
       error => {
         this.setState({
           isPedometerAvailable: "Could not get isPedometerAvailable: " + error
-        });
-      }
-    );
-
-    const end = new Date();
-    const start = new Date();
-    start.setDate(end.getDate() - 1);
-    Pedometer.getStepCountAsync(start, end).then(
-      result => {
-        this.setState({ pastStepCount: result.steps });
-      },
-      error => {
-        this.setState({
-          pastStepCount: "Could not get stepCount: " + error
         });
       }
     );
