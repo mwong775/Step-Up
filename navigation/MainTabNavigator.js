@@ -6,7 +6,9 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 import Dashboard from '../screens/Dashboard';
 import ChallengesScreen from '../screens/Challenges';
-import SettingsScreen from '../screens/SettingsScreen';
+import Map from '../screens/Map';
+import Donate from '../screens/Donate';
+
 
 const points = 'Points: 1234 :)';
 
@@ -67,27 +69,48 @@ ChallengesStack.navigationOptions = {
 
 ChallengesStack.path = '';
 
-const SettingsStack = createStackNavigator(
+const DonateStack = createStackNavigator(
+   {
+      Donate: Donate,
+   },
+   topbar,
+   config
+);
+
+DonateStack.navigationOptions = {
+   tabBarLabel: 'Donate',
+   tabBarIcon: ({ focused })=> (
+      <TabBarIcon focused = {focused} name = "logo-usd" />
+   )
+
+};
+
+DonateStack.path = '';
+
+const MapStack = createStackNavigator(
   {
-    Settings: SettingsScreen,
+     Map: Map,
   },
   topbar,
   config
 );
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
-  ),
+MapStack.navigationOptions = {
+  tabBarLabel: 'Map',
+  tabBarIcon: ({ focused })=> (
+     <TabBarIcon focused = {focused} name = "ios-map" />
+  )
+
 };
 
-SettingsStack.path = '';
+MapStack.path = '';
+
 
 const tabNavigator = createBottomTabNavigator({
   DashStack,
+  DonateStack,
   ChallengesStack,
-  SettingsStack,
+  MapStack,
 });
 
 tabNavigator.path = '';

@@ -3,7 +3,6 @@ import { Pedometer } from "expo-sensors";
 import { StyleSheet, Text, View, ScrollView, Image, Button } from 'react-native';
 import {createAppContainer, StackNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import Redeem from './Redeem';
 import * as firebase from 'firebase';
 
 // Initialize Firebase
@@ -87,7 +86,7 @@ export default class App extends React.Component {
     this._subscription = Pedometer.watchStepCount(result => {
       // console.log(result.steps);
       this.setState({
-        currentStepCount: result.steps
+        currentStepCount: result.step
       });
     });
 
@@ -124,10 +123,6 @@ export default class App extends React.Component {
     this._subscription = null;
   };
 
-  _goRedeem = () => {
-    this.props.navigation.navigate('redeem');
-  }
-
   test() {
     alert("TEST BUTTON WORKS :D");
   }
@@ -147,16 +142,15 @@ export default class App extends React.Component {
     }));
   }
 
+  _passPoints = () => {
+     this.props.navigation.setParams({currentPoints: this.state.currentPoints});
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} style={styles.contentContainer}>
           <Text style={styles.mainStatsText}>My Points: {this.state.currentPoints}</Text>
-          <Button
-          style={styles.button}
-          onPress={ () => this._goRedeem() }
-          title="Redeem"
-          />
           <Text style={styles.mainStatsText}>Current Steps: {this.state.currentStepCount}</Text>
           <Text style={styles.pastStepText}>
             Steps taken in the last 24 hours: {this.state.pastStepCount}
