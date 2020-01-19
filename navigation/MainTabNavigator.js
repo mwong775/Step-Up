@@ -95,15 +95,19 @@ const RedeemStack = createStackNavigator(
 
 RedeemStack.navigationOptions = {
    tabBarLabel: 'Redeem',
+   tabBarIcon: ({ focused })=> (
+      <TabBarIcon focused = {focused} name = "logo-usd" />
+   )
+
 };
 
 RedeemStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   DashStack,
+  RedeemStack,
   ChallengesStack,
   SettingsStack,
-  RedeemStack,
 });
 
 tabNavigator.path = '';

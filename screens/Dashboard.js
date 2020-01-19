@@ -26,7 +26,7 @@ export default class App extends React.Component {
     this._subscription = Pedometer.watchStepCount(result => {
       // console.log(result.steps);
       this.setState({
-        currentStepCount: result.steps
+        currentStepCount: result.step
       });
     });
 
@@ -86,6 +86,10 @@ export default class App extends React.Component {
       currentStepCount: 0,
       currentPoints: 0,
     }));
+  }
+
+  _passPoints = () => {
+     this.props.navigation.setParams({currentPoints: this.state.currentPoints});
   }
 
   render() {
