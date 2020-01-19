@@ -8,6 +8,7 @@ import Dashboard from '../screens/Dashboard';
 import ChallengesScreen from '../screens/Challenges';
 import SettingsScreen from '../screens/SettingsScreen';
 import RedeemScreen from '../screens/RedeemScreen';
+//#99d6ff
 
 const points = 'Points: 1234 :)';
 
@@ -19,11 +20,12 @@ const config = Platform.select({
 const topbar = { /* The header config from Dashboard is now here */
   defaultNavigationOptions: {
     headerStyle: {
-      backgroundColor: '#99d6ff',
+      backgroundColor: 'green',
     },
     headerTintColor: '#fff',
     headerTitleStyle: {
       fontSize: 20,
+      color: "white"
     },
   }
 };

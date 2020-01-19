@@ -1,105 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import { ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import {View, Text, Button, TouchableOpacity} from 'react-native';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
+import RedeemBox from '../components/RedeemBox';
 
-export default function LinksScreen() {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
-  const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
-
-  if (hasPermission === null) {
-    return <View />;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera :(</Text>;
-  }
+export default class ChallengesScreen extends Component{
+   render() {
   return(
-    <View style={{ flex: 1 }}>
-      <Camera style={{ flex: 1 }} type={type} flashMode={flash}>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'transparent',
-            flexDirection: 'row',
-          }}>
-          <TouchableOpacity
-            style={{
-              flex: 0.1,
-              alignSelf: 'flex-end',
-              alignItems: 'center',
-            }}
-            onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
-            }}>
-            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              marginRight: 0,
-              marginLeft: 'auto',
-              alignSelf: 'flex-end',
-              alignItems: 'center',
-            }}
-            onPress={() => {
-              setFlash(
-                flash === Camera.Constants.FlashMode.torch
-                  ? Camera.Constants.FlashMode.off
-                  : Camera.Constants.FlashMode.torch
-              );
-            }}>
-            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flash </Text>
-          </TouchableOpacity>
-        </View>
-      </Camera>
-    </View>    
-    );
-}
-
-function linksScreen() {
-  return (
-    <ScrollView style={styles.container}>
-      {/**
-       * Go ahead and delete ExpoLinksView and replace it with your content;
-       * we just wanted to provide you with some helpful links.
-       */}
-      <ExpoLinksView />
-    </ScrollView>
+  <ScrollView>
+    <RedeemBox Msg = "+1000 points" Info = "Stroll in the Park" Pic = "https://upload.wikimedia.org/wikipedia/commons/6/6e/A_Walk_in_the_Park_-_geograph.org.uk_-_546153.jpg" />
+    <RedeemBox Msg = "+1000 points" Info = "Walk through the Beach" Pic = "https://4.bp.blogspot.com/_3I0_GEQtQOQ/TBNtIygZHEI/AAAAAAAAAKs/J4iyq_S8zhw/s1600/hd-summer-wallpaper-2560x1600-1006089.jpg"/>
+    <RedeemBox Msg = "+1000 points" Info = "Shop around a Mall" Pic = "https://img2.10bestmedia.com/Images/Photos/19492/p-Pacific-Place-Mall_55_660x440_201404181635.jpg" />
+    <RedeemBox Msg = "+1000 points" Info = "Take a Hike" Pic = "https://www.bing.com/th?id=OIP.oJtt_QuylhatU0FuU_MgFwHaEo&pid=Api&rs=1" />
+    <RedeemBox Msg = "+1000 points" Info = "Explore a museum" Pic = "https://traveldigg.com/wp-content/uploads/2016/06/Louvre-Museum-Inside-Photo.jpg" />
+    <RedeemBox Msg = "+1000 points" Info = "Walk around Downtown" Pic = "https://s3.amazonaws.com/luxechicago/wp-content/uploads/2017/01/12145511/HinsdaleChamber_ChristmasWalk_750x397.jpg"/>
+    <RedeemBox Msg = "+1000 points" Info = "Run a Marathon" Pic = "https://static.ukrinform.com/photos/2018_10/thumb_files/630_360_1538638597-241.jpg"/>
+  </ScrollView>
   );
-}
-
-LinksScreen.navigationOptions = {
-  title: 'Links',
+   }
 };
 
-const { width: winWidth, height: winHeight } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-  preview: {
-    height: winHeight,
-    width: winWidth,
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-  },
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff',
-  },
-});
+ChallengesScreen.navigationOptions = {
+  title: 'Challenges',
+};

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pedometer } from "expo-sensors";
-import { StyleSheet, Text, View, ScrollView, Image, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, AsyncStorage, View, ScrollView, Image, Button, ImageBackground } from 'react-native';
 import {createAppContainer, StackNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import Redeem from './Redeem';
@@ -53,7 +53,7 @@ export default class App extends React.Component {
     this._subscription = Pedometer.watchStepCount(result => {
       // console.log(result.steps);
       this.setState({
-        currentStepCount: result.step
+        currentStepCount: result.steps
       });
     });
 
@@ -90,13 +90,13 @@ export default class App extends React.Component {
     this._subscription = null;
   };
 
-  _goRedeem = () => {
-    this.props.navigation.navigate('redeem');
-  }
+  // _goRedeem = () => {
+  //   this.props.navigation.navigate('redeem');
+  // }
 
-  test() {
-    alert("TEST BUTTON WORKS :D");
-  }
+  // test() {
+  //   alert("TEST BUTTON WORKS :D");
+  // }
 
   _addSteps = () => {
     this.setState(prevState => ({ currentStepCount: prevState.currentStepCount + 1 }));
@@ -113,60 +113,45 @@ export default class App extends React.Component {
     }));
   }
 
+//   _pushPoints = (value) => {
+//     AsyncStorage.setItem('points', value);
+//     this._donated();
+//   }
+
+//   _donated=async()=> {
+//   try{  
+//       var points = await AsyncStorage.getItem('points');  
+//       alert(points);  
+//     }  
+//     catch(error){  
+//       alert("failed lol")  
+//     } 
+//   //alert(points);
+// }
+
   _passPoints = () => {
      this.props.navigation.setParams({currentPoints: this.state.currentPoints});
   }
-
   render() {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} style={styles.contentContainer}>
-          <Text style={styles.mainStatsText}>My Points: {this.state.currentPoints}</Text>
-          <Button
-          style={styles.button}
-          onPress={ () => this._goRedeem() }
-          title="Redeem"
-          />
-          <Text style={styles.mainStatsText}>Current Steps: {this.state.currentStepCount}</Text>
-          <Text style={styles.pastStepText}>
-            Steps taken in the last 24 hours: {this.state.pastStepCount}
+        <ImageBackground source = {{uri: "https://www.future-of-leadership.org/wp-content/uploads/2018/10/green-gradient.png"}} 
+        style = {{width : 300, height: 300,marginTop: 70, marginLeft: 30, alignItems: "center", marginHorizaontal: 30, justifyContent: "center"}}>
+          <Text style={styles.mainStatsText}>Pace-Os: {this.state.currentPoints}
           </Text>
-          <Text style={styles.asyncText}>
-            Pedometer.isAvailableAsync(): {this.state.isPedometerAvailable}
-          </Text>
-          <Button
-          style={styles.button}
-          onPress={this.test}
-          title="Test Button"
-          />
-          <Button
-          style={styles.button}
-          onPress={ () => this._addSteps() }
-          title="Add Steps"
-          />
-          <Button
-          style={styles.button}
-          onPress={ () => this._addPoints() }
-          title="Add Points"
-          />
-          <Button
-          style={styles.button}
-          onPress={ () => this._resetStats() }
-          title="Reset Stats"
-          />
+          <Text style={styles.mainStatsText}>Steps: {this.state.currentStepCount}</Text>
+          </ImageBackground>
         </ScrollView>
-        <Image
-            source={
-                require('../assets/images/footprint.jpg')
-            }
-            style={styles.footprintImage}
-        />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  button: {
+    backgroundColor: 'white'
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -176,7 +161,9 @@ const styles = StyleSheet.create({
   },
   mainStatsText: {
     fontSize: 30, 
+    fontWeight: "bold",
     textAlign: 'center',
+    color: "green"
   },
   pastStepText: {
     textAlign: 'center',
@@ -192,6 +179,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     zIndex: -1,
-    opacity: 0.4,
+    opacity: 0.6,
   },
 });
