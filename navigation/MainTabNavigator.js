@@ -20,11 +20,12 @@ const config = Platform.select({
 const topbar = { /* The header config from Dashboard is now here */
   defaultNavigationOptions: {
     headerStyle: {
-      backgroundColor: '#99d6ff',
+      backgroundColor: 'green',
     },
     headerTintColor: '#fff',
     headerTitleStyle: {
       fontSize: 20,
+      color: 'white',
     },
   }
 };

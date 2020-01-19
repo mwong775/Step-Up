@@ -1,46 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import { ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import {View, Text, Button, TouchableOpacity} from 'react-native';
+import RedeemBox from '../components/RedeemBox';
 
-export default function LinksScreen() {
+export default class ChallengesScreen extends Component{
+   render() {
   return(
-    <View style={{ flex: 1 }}>
-    </View>    
-    );
-}
-
-// function linksScreen() {
-//   return (
-//     <ScrollView style={styles.container}>
-//       {/**
-//        * Go ahead and delete ExpoLinksView and replace it with your content;
-//        * we just wanted to provide you with some helpful links.
-//        */}
-//       <ExpoLinksView />
-//     </ScrollView>
-//   );
-// }
-
-LinksScreen.navigationOptions = {
-  title: 'Challenges',
+  <ScrollView>
+    <RedeemBox Msg = "+1000 points" Info = "Stroll in the Park" Pic = "https://upload.wikimedia.org/wikipedia/commons/6/6e/A_Walk_in_the_Park_-_geograph.org.uk_-_546153.jpg" />
+    <RedeemBox Msg = "+1000 points" Info = "Walk on the Beach" Pic = "https://4.bp.blogspot.com/_3I0_GEQtQOQ/TBNtIygZHEI/AAAAAAAAAKs/J4iyq_S8zhw/s1600/hd-summer-wallpaper-2560x1600-1006089.jpg"/>
+    <RedeemBox Msg = "+1000 points" Info = "Shop around a Mall" Pic = "https://img2.10bestmedia.com/Images/Photos/19492/p-Pacific-Place-Mall_55_660x440_201404181635.jpg" />
+    <RedeemBox Msg = "+1000 points" Info = "Go on a Hike" Pic = "https://www.bing.com/th?id=OIP.oJtt_QuylhatU0FuU_MgFwHaEo&pid=Api&rs=1" />
+    <RedeemBox Msg = "+1000 points" Info = "Explore a museum" Pic = "https://traveldigg.com/wp-content/uploads/2016/06/Louvre-Museum-Inside-Photo.jpg" />
+    <RedeemBox Msg = "+1000 points" Info = "Walk around Downtown" Pic = "https://s3.amazonaws.com/luxechicago/wp-content/uploads/2017/01/12145511/HinsdaleChamber_ChristmasWalk_750x397.jpg"/>
+    <RedeemBox Msg = "+1000 points" Info = "Run a Marathon" Pic = "https://static.ukrinform.com/photos/2018_10/thumb_files/630_360_1538638597-241.jpg"/>
+  </ScrollView>
+  );
+   }
 };
 
-const { width: winWidth, height: winHeight } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-  preview: {
-    height: winHeight,
-    width: winWidth,
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-  },
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff',
-  },
-});
+ChallengesScreen.navigationOptions = {
+  title: 'Challenges',
+};

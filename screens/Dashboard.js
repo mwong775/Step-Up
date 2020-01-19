@@ -1,7 +1,6 @@
 import React from 'react';
 import { Pedometer } from "expo-sensors";
-import { StyleSheet, Text, View, ScrollView, Image, Button } from 'react-native';
-import {createAppContainer, StackNavigator} from 'react-navigation';
+import { StyleSheet, Text, TextInput, AsyncStorage, View, ScrollView, Image, Button, ImageBackground } from 'react-native';import {createAppContainer, StackNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import * as firebase from 'firebase';
 
@@ -149,48 +148,22 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} style={styles.contentContainer}>
-          <Text style={styles.mainStatsText}>My Points: {this.state.currentPoints}</Text>
-          <Text style={styles.mainStatsText}>Current Steps: {this.state.currentStepCount}</Text>
-          <Text style={styles.pastStepText}>
-            Steps taken in the last 24 hours: {this.state.pastStepCount}
-          </Text>
-          <Text style={styles.asyncText}>
-            Pedometer.isAvailableAsync(): {this.state.isPedometerAvailable}
-          </Text>
-          <Button
-          style={styles.button}
-          onPress={this.test}
-          title="Test Button"
-          />
-          <Button
-          style={styles.button}
-          onPress={ () => this._addSteps() }
-          title="Add Steps"
-          />
-          <Button
-          style={styles.button}
-          onPress={ () => this._addPoints() }
-          title="Add Points"
-          />
-          <Button
-          style={styles.button}
-          onPress={ () => this._resetStats() }
-          title="Reset Stats"
-          />
-        </ScrollView>
-        <Image
-            source={
-                require('../assets/images/footprint.jpg')
-            }
-            style={styles.footprintImage}
-        />
-      </View>
-    );
+      <ScrollView style={styles.container} style={styles.contentContainer}>
+      <ImageBackground source = {{uri: "https://www.future-of-leadership.org/wp-content/uploads/2018/10/green-gradient.png"}} 
+      style = {{width : 300, height: 300,marginTop: 70, marginLeft: 30, alignItems: "center", marginHorizaontal: 30, justifyContent: "center"}}>
+        <Text style={styles.mainStatsText}>Pace-Os: {this.state.currentPoints}
+        </Text>
+        <Text style={styles.mainStatsText}>Steps: {this.state.currentStepCount}</Text>
+        </ImageBackground>
+      </ScrollView>
+    </View>    );
   }
 }
 
 const styles = StyleSheet.create({
+  button: {
+    backgroundColor: 'white'
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -200,7 +173,9 @@ const styles = StyleSheet.create({
   },
   mainStatsText: {
     fontSize: 30, 
+    fontWeight: "bold",
     textAlign: 'center',
+    color: "green"
   },
   pastStepText: {
     textAlign: 'center',
@@ -216,6 +191,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     zIndex: -1,
-    opacity: 0.4,
+    opacity: 0.6,
   },
 });
