@@ -49,7 +49,7 @@ export default class App extends React.Component {
       const data = snapshot.val();
       this.setState({
         currentPoints: data.points,
-        currentStepCount: data.steps
+        currentStepCount: data.steps,
       })
     }) 
   }
@@ -76,7 +76,7 @@ export default class App extends React.Component {
     console.log("STORING DATA", this.state.currentPoints, this.state.currentStepCount);
     firebase.database().ref('users/' + userId).set({
       points: this.state.currentPoints,
-      steps: this.state.currentStepCount
+      steps: this.state.currentStepCount,
     });
   }
 
@@ -84,7 +84,7 @@ export default class App extends React.Component {
     this._subscription = Pedometer.watchStepCount(result => {
       // console.log(result.steps);
       this.setState({
-        currentStepCount: result.step
+        currentStepCount: result.steps,
       });
     });
 
