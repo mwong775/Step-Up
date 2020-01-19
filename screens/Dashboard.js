@@ -29,7 +29,6 @@ export default class App extends React.Component {
     currentStepCount: 0,
     currentPoints: 0,
     isPointSet: false,
-    // below for tracking more stats eventually 
     totalPointsEarned: 0,
     totalSteps: 0,
     DailyStepsPB: 0,
@@ -60,7 +59,7 @@ export default class App extends React.Component {
       this.setState(previousState => (
         { currentPoints: previousState.currentPoints + 1 }
       ));
-      this.storeData("userId");
+      // this.storeData("userId");
       this.state.isPointSet = true;
     }
     else if(this.state.currentStepCount % 5 === 1) {
@@ -70,7 +69,7 @@ export default class App extends React.Component {
 
   componentWillUnmount() {
     this._unsubscribe();
-    // this.storeData("userId");
+    this.storeData("userId");
   }
 
   storeData(userId) {

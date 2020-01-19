@@ -9,9 +9,6 @@ import ChallengesScreen from '../screens/Challenges';
 import Map from '../screens/Map';
 import Donate from '../screens/Donate';
 
-
-const points = 'Points: 1234 :)';
-
 const config = Platform.select({
   web: { headerMode: 'screen' },
   default: {},

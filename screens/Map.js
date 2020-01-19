@@ -28,34 +28,21 @@ export default class Map extends React.Component {
   }
 
   componentDidMount(){
-    // // identify the user and request permissions
-    // Radar.setUserId(this.state.userId);
-    // Radar.requestPermissions(true);
+    // return fetch('https://facebook.github.io/react-native/movies.json')
+    //   .then((response) => response.json())
+    //   .then((responseJson) => {
 
-    // // track the user's location once in the foreground
-    // Radar.trackOnce().then((result) => {
-    //   // do something with result.events, result.user.geofences
-    // }).catch((err) => {
-    //   // optionally, do something with err
-    // });
+    //     this.setState({
+    //       isLoading: false,
+    //       dataSource: responseJson.movies,
+    //     }, function(){
 
-    // // start tracking the user's location in the background
-    // Radar.startTracking();
-    return fetch('https://facebook.github.io/react-native/movies.json')
-      .then((response) => response.json())
-      .then((responseJson) => {
+    //     });
 
-        this.setState({
-          isLoading: false,
-          dataSource: responseJson.movies,
-        }, function(){
-
-        });
-
-      })
-      .catch((error) =>{
-        console.error(error);
-      });
+    //   })
+    //   .catch((error) =>{
+    //     console.error(error);
+    //   });
   }
   
 
@@ -79,7 +66,6 @@ export default class Map extends React.Component {
     <Marker
       coordinate={marker.coordinate}
       title={marker.title}
-      // description={marker.description}
     />
   ))}
         </MapView>
