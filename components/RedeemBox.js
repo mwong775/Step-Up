@@ -3,7 +3,7 @@ import {Text, Alert, View, AsyncStorage, StyleSheet, TouchableOpacity, ImageBack
 
 export default class RedeemBox extends Component{
 
-_message=(Msg)=> {
+_message = (Msg) => {
   // try{  
   //     var points = await AsyncStorage.getItem('points');  
   //     alert(points);  
@@ -19,7 +19,7 @@ render() {
    	<View>
    	<TouchableOpacity
    	   style = {{backgroundColor: '#DDDDDD'}}
-   	   onPress={this._message(this.props.Msg)}>
+   	   onPress={() => this._message(this.props.Msg)}>
        <ImageBackground 
        source = {{uri: this.props.Pic}}
        style = {{height:100, padding: 10}} >
