@@ -95,7 +95,7 @@ export default class App extends React.Component {
   }
 
   test() {
-    alert(this.state.currentStepCount);
+    alert("TEST BUTTON WORKS :D");
   }
 
   _addSteps = () => {
