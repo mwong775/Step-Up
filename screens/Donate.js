@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Text, View, SafeAreaView, ScrollView} from 'react-native'; 
 import RedeemBox from '../components/RedeemBox';
-export default class RedeemScreen extends Component{
+export default class Donate extends Component{
    render() {
 	return(
 	<ScrollView>
@@ -17,7 +17,7 @@ export default class RedeemScreen extends Component{
    }
 };
 
-RedeemScreen.navigationOptions = {
-	title: 'Redeem',
+Donate.navigationOptions = {
+	title: 'Donate',
 };
 

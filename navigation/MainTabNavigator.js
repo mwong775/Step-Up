@@ -7,7 +7,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import Dashboard from '../screens/Dashboard';
 import ChallengesScreen from '../screens/Challenges';
 import SettingsScreen from '../screens/SettingsScreen';
-import RedeemScreen from '../screens/RedeemScreen';
+import Donate from '../screens/Donate';
 
 const points = 'Points: 1234 :)';
 
@@ -68,46 +68,28 @@ ChallengesStack.navigationOptions = {
 
 ChallengesStack.path = '';
 
-const SettingsStack = createStackNavigator(
-  {
-    Settings: SettingsScreen,
-  },
-  topbar,
-  config
-);
-
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
-  ),
-};
-
-SettingsStack.path = '';
-
-const RedeemStack = createStackNavigator(
+const DonateStack = createStackNavigator(
    {
-      Redeem: RedeemScreen,
+      Donate: Donate,
    },
    topbar,
    config
 );
 
-RedeemStack.navigationOptions = {
-   tabBarLabel: 'Redeem',
+DonateStack.navigationOptions = {
+   tabBarLabel: 'Donate',
    tabBarIcon: ({ focused })=> (
       <TabBarIcon focused = {focused} name = "logo-usd" />
    )
 
 };
 
-RedeemStack.path = '';
+DonateStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   DashStack,
-  RedeemStack,
+  DonateStack,
   ChallengesStack,
-  SettingsStack,
 });
 
 tabNavigator.path = '';
