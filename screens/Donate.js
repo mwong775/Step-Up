@@ -18,5 +18,5 @@ export default class RedeemScreen extends Component{
 };
 
 RedeemScreen.navigationOptions = {
-	title: 'Redeem',
+	title: 'Donate',
 };
