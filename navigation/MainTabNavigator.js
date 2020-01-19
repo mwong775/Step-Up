@@ -6,8 +6,9 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 import Dashboard from '../screens/Dashboard';
 import ChallengesScreen from '../screens/Challenges';
-import SettingsScreen from '../screens/SettingsScreen';
+import Map from '../screens/Map';
 import Donate from '../screens/Donate';
+
 
 const points = 'Points: 1234 :)';
 
@@ -86,10 +87,30 @@ DonateStack.navigationOptions = {
 
 DonateStack.path = '';
 
+const MapStack = createStackNavigator(
+  {
+     Map: Map,
+  },
+  topbar,
+  config
+);
+
+MapStack.navigationOptions = {
+  tabBarLabel: 'Map',
+  tabBarIcon: ({ focused })=> (
+     <TabBarIcon focused = {focused} name = "logo-usd" />
+  )
+
+};
+
+MapStack.path = '';
+
+
 const tabNavigator = createBottomTabNavigator({
   DashStack,
   DonateStack,
   ChallengesStack,
+  MapStack,
 });
 
 tabNavigator.path = '';

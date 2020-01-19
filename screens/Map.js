@@ -4,7 +4,7 @@ import MapView from 'react-native-maps';
 import { StyleSheet, Dimensions, View, Text, FlatList } from 'react-native';
 // import Radar from 'react-native-radar';
 
-export default class SettingsScreen extends React.Component {
+export default class Map extends React.Component {
   /**
    * Go ahead and delete ExpoConfigView and replace it with your content;
    * we just wanted to give you a quick view of your config.
