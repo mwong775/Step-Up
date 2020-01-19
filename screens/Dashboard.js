@@ -1,13 +1,25 @@
 import React from 'react';
 import { Pedometer } from "expo-sensors";
 import { StyleSheet, Text, View, ScrollView, Image, Button } from 'react-native';
+import {createAppContainer, StackNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import Redeem from './Redeem';
+
+// const Routes = createStackNavigator({
+//   redeem: {screen: Redeem},
+// });
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   state = {
     isPedometerAvailable: "checking",
     pastStepCount: 0,
     currentStepCount: 0,
     currentPoints: 0,
+    isPointSet: false,
     // below for tracking more stats eventually 
     totalPointsEarned: 0,
     totalSteps: 0,
@@ -16,7 +28,22 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this._subscribe();
+    setInterval(() => (
+      this.setPoints()
+    ), 200);
   }
+
+  setPoints = () => {
+    if((this.state.currentStepCount !== 0) && this.state.currentStepCount % 5 === 0 && (!this.state.isPointSet)) {
+      this.setState(previousState => (
+        { currentPoints: previousState.currentPoints + 1 }
+      ));
+      this.state.isPointSet = true;
+    }
+    else if(this.state.currentStepCount % 5 === 1) {
+      this.state.isPointSet = false;
+    }
+  } 
 
   componentWillUnmount() {
     this._unsubscribe();
@@ -63,14 +90,12 @@ export default class App extends React.Component {
     this._subscription = null;
   };
 
-  test() {
-    alert("test function works!");
+  _goRedeem = () => {
+    this.props.navigation.navigate('redeem');
   }
 
-  _setPoints = () => {
-    // TODO: subscribe or something to trigger event and auto compute
-    // FORMULA FOR CALCULATING POINTS HERE
-    this.setState(prevState => ({currentPoints: prevState.currentPoints + prevState.currentStepCount/10}));
+  test() {
+    alert("TEST BUTTON WORKS :D");
   }
 
   _addSteps = () => {
@@ -97,6 +122,11 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.container} style={styles.contentContainer}>
           <Text style={styles.mainStatsText}>My Points: {this.state.currentPoints}</Text>
+          <Button
+          style={styles.button}
+          onPress={ () => this._goRedeem() }
+          title="Redeem"
+          />
           <Text style={styles.mainStatsText}>Current Steps: {this.state.currentStepCount}</Text>
           <Text style={styles.pastStepText}>
             Steps taken in the last 24 hours: {this.state.pastStepCount}
