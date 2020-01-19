@@ -1,6 +1,7 @@
 import React from 'react';
 import { ExpoConfigView } from '@expo/samples';
 import MapView from 'react-native-maps';
+import { Marker } from 'react-native-maps';
 import { StyleSheet, Dimensions, View, Text, FlatList } from 'react-native';
 // import Radar from 'react-native-radar';
 
@@ -11,27 +12,40 @@ export default class SettingsScreen extends React.Component {
    */
   constructor(props){
     super(props);
-    this.state ={ isLoading: true}
+    this.state ={ 
+      isLoading: true,
+      latitude: null,
+      longitude: null,
+      error:null,
+      markers: [{
+        coordinate: {
+          "latitude": 36.9975221,
+          "longitude": -122.0544869,
+        },
+        title: "test",
+      }]
+    }
   }
 
   componentDidMount(){
-    // // identify the user and request permissions
-    // Radar.setUserId(this.state.userId);
-    // Radar.requestPermissions(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        // console.log("wokeeey");
+        console.log("pOsItIoN:", position);
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+        });
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
+    );
 
-    // // track the user's location once in the foreground
-    // Radar.trackOnce().then((result) => {
-    //   // do something with result.events, result.user.geofences
-    // }).catch((err) => {
-    //   // optionally, do something with err
-    // });
-
-    // // start tracking the user's location in the background
-    // Radar.startTracking();
-    return fetch('https://facebook.github.io/react-native/movies.json')
+    return fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=36.9969384062279,-122.05221132051499&radius=1500&type=park&key=AIzaSyCBmFQYZJ4AdWV1M5skmCGO6x_0s88DZUM')
       .then((response) => response.json())
       .then((responseJson) => {
-
+        console.log(responseJson);
         this.setState({
           isLoading: false,
           dataSource: responseJson.movies,
@@ -45,6 +59,10 @@ export default class SettingsScreen extends React.Component {
       });
   }
   
+  // https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=park&inputtype=textquery&fields=photos,formatted_address,name&locationbias=circle:2000@36.9969384062279,-122.05221132051499&key=YOUR_API_KEY
+
+  // https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=36.9969384062279,-122.05221132051499&radius=1500&type=park&key=YOUR_API_KEY
+  // AIzaSyCBmFQYZJ4AdWV1M5skmCGO6x_0s88DZUM
 
   render() {
     return (
@@ -52,18 +70,31 @@ export default class SettingsScreen extends React.Component {
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: 36.9969384062279,
+          longitude: -122.05221132051499,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        />
-        {/* <Text style={styles.text}>Hi</Text> */}
+        >
+         {!!this.state.latitude && !!this.state.longitude && <MapView.Marker
+         coordinate={{"latitude":this.state.latitude,"longitude":this.state.longitude}}
+         title={"Your Location"}
+       />}
+       {this.state.markers.map(marker => (
+    <Marker
+      coordinate={marker.coordinate}
+      title={marker.title}
+      // description={marker.description}
+    />
+  ))}
+        </MapView>
+        {/* <Text> {this.state.latitude} </Text>
+        <Text> {this.state.longitude} </Text>
         <FlatList
           data={this.state.dataSource}
           renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}
           keyExtractor={({id}, index) => id}
-        />
+        /> */}
       </View>
     );
   }
