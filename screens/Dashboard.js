@@ -4,10 +4,21 @@ import { StyleSheet, Text, View, ScrollView, Image, Button } from 'react-native'
 import {createAppContainer, StackNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import Redeem from './Redeem';
+import * as firebase from 'firebase';
 
-// const Routes = createStackNavigator({
-//   redeem: {screen: Redeem},
-// });
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBROP_XYv0IQ-nf72WGAQhGwzMkzqKohxw",
+  authDomain: "step-up-2be49.firebaseapp.com",
+  databaseURL: "https://step-up-2be49.firebaseio.com",
+  storageBucket: "step-up-2be49.appspot.com"
+};
+
+// if (!firebase.apps.length) {
+//   firebase.initializeApp({firebaseConfig});
+// }
+
+firebase.initializeApp(firebaseConfig);
 
 export default class App extends React.Component {
   constructor(props) {
@@ -26,11 +37,24 @@ export default class App extends React.Component {
     DailyStepsPB: 0,
   };
 
+  
+
   componentDidMount() {
+    this.getData("userId");
     this._subscribe();
     setInterval(() => (
       this.setPoints()
     ), 200);
+  }
+
+  getData(userId) {
+    firebase.database().ref('users/' + userId).on('value',snapshot => {
+      const data = snapshot.val();
+      this.setState({
+        currentPoints: data.points,
+        currentStepCount: data.steps
+      })
+    }) 
   }
 
   setPoints = () => {
@@ -38,6 +62,7 @@ export default class App extends React.Component {
       this.setState(previousState => (
         { currentPoints: previousState.currentPoints + 1 }
       ));
+      this.storeData("userId");
       this.state.isPointSet = true;
     }
     else if(this.state.currentStepCount % 5 === 1) {
@@ -47,6 +72,15 @@ export default class App extends React.Component {
 
   componentWillUnmount() {
     this._unsubscribe();
+    // this.storeData("userId");
+  }
+
+  storeData(userId) {
+    console.log("STORING DATA", this.state.currentPoints, this.state.currentStepCount);
+    firebase.database().ref('users/' + userId).set({
+      points: this.state.currentPoints,
+      steps: this.state.currentStepCount
+    });
   }
 
   _subscribe = () => {
