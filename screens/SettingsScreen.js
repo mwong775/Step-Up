@@ -31,7 +31,7 @@ export default class SettingsScreen extends React.Component {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         // console.log("wokeeey");
-        console.log(position);
+        console.log("pOsItIoN:", position);
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -41,8 +41,28 @@ export default class SettingsScreen extends React.Component {
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
     );
+
+    return fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=36.9969384062279,-122.05221132051499&radius=1500&type=park&key=AIzaSyCBmFQYZJ4AdWV1M5skmCGO6x_0s88DZUM')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson.movies,
+        }, function(){
+
+        });
+
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
   }
   
+  // https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=park&inputtype=textquery&fields=photos,formatted_address,name&locationbias=circle:2000@36.9969384062279,-122.05221132051499&key=YOUR_API_KEY
+
+  // https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=36.9969384062279,-122.05221132051499&radius=1500&type=park&key=YOUR_API_KEY
+  // AIzaSyCBmFQYZJ4AdWV1M5skmCGO6x_0s88DZUM
 
   render() {
     return (
@@ -70,6 +90,11 @@ export default class SettingsScreen extends React.Component {
         </MapView>
         <Text> {this.state.latitude} </Text>
         <Text> {this.state.longitude} </Text>
+        <FlatList
+          data={this.state.dataSource}
+          renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}
+          keyExtractor={({id}, index) => id}
+        />
       </View>
     );
   }
